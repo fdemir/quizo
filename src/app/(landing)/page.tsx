@@ -19,12 +19,8 @@ export default function Home() {
       </p>
 
       <div className="flex gap-4">
-        {/* <Button size="lg" variant={"outline"}>
-          About
-        </Button> */}
-
         <Dialog>
-          <DialogTrigger>
+          <DialogTrigger asChild>
             <Button size="lg" variant={"outline"}>
               About
             </Button>
