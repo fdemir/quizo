@@ -1,9 +1,12 @@
 import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-import { Progress } from "@/components/ui/progress";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
-export default function Today() {
+import { Progress } from "@/components/ui/progress";
+import { getTodayQuestions } from "./action";
+import Question from "./_components/question";
+
+export default async function Today() {
+  const questions = await getTodayQuestions();
+
   return (
     <div className="bg-zinc-100 min-h-screen flex items-center justify-center">
       <div className="w-[400px] flex flex-col gap-4">
@@ -13,23 +16,7 @@ export default function Today() {
           <span className="whitespace-nowrap">1 / 3</span>
         </div>
 
-        <div>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum
-          quibusdam fugiat illo sed et dolorem amet veniam quos quidem nulla?
-        </div>
-
-        <div>
-          <RadioGroup defaultValue="option-one">
-            <div className="flex items-center space-x-3 py-1">
-              <RadioGroupItem value="option-one" id="option-one" />
-              <Label htmlFor="option-one">Option One</Label>
-            </div>
-            <div className="flex items-center space-x-3 py-1">
-              <RadioGroupItem value="option-two" id="option-two" />
-              <Label htmlFor="option-two">Option Two</Label>
-            </div>
-          </RadioGroup>
-        </div>
+        <Question text="odsaopdsa" options={[]} correctKey="d" />
 
         <div className="w-full flex justify-between items-center">
           <span>{/* todo */}</span>
