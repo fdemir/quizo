@@ -3,8 +3,26 @@ import { z } from "zod";
 import { openai } from "@ai-sdk/openai";
 import { NextResponse } from "next/server";
 import { options, questions } from "@/db/schema";
-import db from "@/db/drizzle";
 import { eq } from "drizzle-orm";
+import { db } from "@/db/drizzle";
+import { fields } from "./fields";
+
+function getRandomUniqueItems(arr: string[], numItems = 3) {
+  const result = [];
+  const usedIndices = new Set();
+
+  while (result.length < numItems) {
+    const randomIndex = Math.floor(Math.random() * arr.length);
+    if (!usedIndices.has(randomIndex)) {
+      result.push(arr[randomIndex]);
+      usedIndices.add(randomIndex);
+    }
+  }
+
+  return result;
+}
+
+const QUESTION_COUNT = 10;
 
 const output_schema = z.object({
   questions: z.array(z.object({
@@ -54,15 +72,18 @@ export async function POST(request: Request) {
     });
   }
 
+  const categories = getRandomUniqueItems(fields);
+
   const { object } = await generateObject({
     model: openai("gpt-4o-2024-05-13"),
     schema: output_schema,
     prompt: `
-        Create 5 interesting "trivial pursuit" like questions: 
-        Categories: Geography, Entertainment, History, Art and Literature, Science and Nature, and Sports and Leisure.
+        Create ${QUESTION_COUNT} interesting "trivial pursuit" like questions: 
+        Categories: ${categories.join(", ")}
         Options: A, B, C, D
         Difficulty: Medium
       `,
+    temperature: 0.7,
   });
 
   await insert(object);
