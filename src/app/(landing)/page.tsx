@@ -9,6 +9,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -41,7 +42,9 @@ export default function Home() {
           </DialogContent>
         </Dialog>
 
-        <Button size="lg">Play</Button>
+        <Link href="/today">
+          <Button size="lg">Play</Button>
+        </Link>
       </div>
     </div>
   );
