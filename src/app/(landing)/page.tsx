@@ -14,7 +14,7 @@ export default function Home() {
   return (
     <div className="h-screen w-screen flex flex-col justify-center items-center bg-zinc-100 gap-4">
       <p className="max-w-[300px] text-center">
-        Solve 5 questions daily.
+        Solve 10 questions daily.
         <br />
       </p>
 
