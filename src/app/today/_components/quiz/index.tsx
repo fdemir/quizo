@@ -5,12 +5,25 @@ import { TodayQuestions } from "../../action";
 import Question from "../question";
 import { Button } from "@/components/ui/button";
 import { useQuizStore } from "../../_store";
+import { useRouter } from "next/navigation";
 
 export default function Quiz({ questions }: { questions: TodayQuestions }) {
+  const router = useRouter();
   const currentQuestionIdx = useQuizStore((state) => state.currentQuestion);
   const currentQuestion = questions[currentQuestionIdx];
   const answer = useQuizStore((state) => state.answers[currentQuestionIdx]);
   const nextQuestion = useQuizStore((state) => state.nextQuestion);
+
+  const handleNext = () => {
+    const isFinished = currentQuestionIdx === questions.length - 1;
+
+    if (isFinished) {
+      router.push("/results");
+      return;
+    }
+
+    nextQuestion();
+  };
 
   return (
     <div className="w-[400px] flex flex-col gap-4">
@@ -35,7 +48,7 @@ export default function Quiz({ questions }: { questions: TodayQuestions }) {
 
       <div className="w-full flex justify-between items-center">
         <span>{/* todo */}</span>
-        <Button size="lg" disabled={!answer} onClick={() => nextQuestion()}>
+        <Button size="lg" disabled={!answer} onClick={handleNext}>
           Next
         </Button>
       </div>

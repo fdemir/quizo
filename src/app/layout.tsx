@@ -5,7 +5,17 @@ import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
   title: "Quizo",
-  description: `Daily AI generated quizzes to keep you entertained and informed.`,
+  description: `Solve it and reveal the secret word.`,
+  openGraph: {
+    title: "Quizo",
+    description: `Solve it and reveal the secret word.`,
+    url: "https://quizo.me",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Quizo",
+    description: `Solve it and reveal the secret word.`,
+  },
 };
 
 const fontSans = FontSans({
