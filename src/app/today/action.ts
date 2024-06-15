@@ -1,3 +1,4 @@
+"use server";
 import { db } from "@/db/drizzle";
 import { questions } from "@/db/schema";
 import { eq } from "drizzle-orm";

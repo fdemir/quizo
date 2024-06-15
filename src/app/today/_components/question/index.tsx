@@ -11,13 +11,13 @@ export default function Question({
   options: (typeof OptionsTable.$inferSelect)[];
   correctKey: string;
 }) {
-  const currentQuestion = useQuizStore((state) => state.currentQuestion);
-  const setAnswer = useQuizStore((state) => state.setAnswer);
+  const { currentQuestionIdx, setAnswer } = useQuizStore((state) => ({
+    currentQuestionIdx: state.currentQuestionIdx,
+    setAnswer: state.setAnswer,
+  }));
 
   const handleGiveAnswer = (key: string) => {
-    console.log(key, currentQuestion);
-
-    setAnswer(key, currentQuestion);
+    setAnswer(key, currentQuestionIdx);
   };
 
   return (
@@ -25,15 +25,13 @@ export default function Question({
       <p>{text}</p>
       <div className="flex flex-col gap-4">
         {options.map((option) => (
-          <>
-            <Option
-              optionKey={option.key}
-              key={option.key}
-              option={option.option}
-              correct={correctKey === option.key}
-              handleGiveAnswer={handleGiveAnswer}
-            />
-          </>
+          <Option
+            optionKey={option.key}
+            key={option.key}
+            option={option.option}
+            correct={correctKey === option.key}
+            handleGiveAnswer={handleGiveAnswer}
+          />
         ))}
       </div>
     </>

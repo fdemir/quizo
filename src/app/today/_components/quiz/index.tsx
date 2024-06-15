@@ -6,17 +6,42 @@ import Question from "../question";
 import { Button } from "@/components/ui/button";
 import { useQuizStore } from "../../_store";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
-export default function Quiz({ questions }: { questions: TodayQuestions }) {
+export default function Quiz({
+  questions: serverQuestions,
+}: {
+  questions: TodayQuestions;
+}) {
   const router = useRouter();
-  const currentQuestionIdx = useQuizStore((state) => state.currentQuestion);
-  const currentQuestion = questions[currentQuestionIdx];
-  const answer = useQuizStore((state) => state.answers[currentQuestionIdx]);
-  const nextQuestion = useQuizStore((state) => state.nextQuestion);
+
+  const {
+    questions,
+    nextQuestion,
+    currentQuestionIdx,
+    currentQuestion,
+    answer,
+    isFinished,
+  } = useQuizStore((state) => ({
+    questions: state.questions,
+    nextQuestion: state.nextQuestion,
+    currentQuestionIdx: state.currentQuestionIdx,
+    currentQuestion: state.currentQuestion(),
+    answer: state.answer(),
+    isFinished: state.isFinished(),
+  }));
+
+  useEffect(() => {
+    useQuizStore.setState({ questions: serverQuestions });
+
+    if (isFinished) {
+      router.push("/results");
+    }
+  }, [serverQuestions]);
+
+  if (!currentQuestion) return;
 
   const handleNext = () => {
-    const isFinished = currentQuestionIdx === questions.length - 1;
-
     if (isFinished) {
       router.push("/results");
       return;
@@ -45,7 +70,6 @@ export default function Quiz({ questions }: { questions: TodayQuestions }) {
         options={currentQuestion.options}
         correctKey={currentQuestion.correct_key}
       />
-
       <div className="w-full flex justify-between items-center">
         <span>{/* todo */}</span>
         <Button size="lg" disabled={!answer} onClick={handleNext}>

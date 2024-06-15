@@ -18,8 +18,10 @@ export default function Option({
   optionKey,
   handleGiveAnswer,
 }: OptionProps) {
-  const currentQuestion = useQuizStore((state) => state.currentQuestion);
-  const answer = useQuizStore((state) => state.answers[currentQuestion]);
+  const { answer } = useQuizStore((state) => ({
+    answer: state.answer(),
+  }));
+
   const answered = answer || null;
 
   const isAnsweredCorrectly = answered === optionKey && correct;
