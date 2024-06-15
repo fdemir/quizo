@@ -2,13 +2,20 @@
 
 import { ConfettiButton } from "@/components/magic-ui/confetti";
 import NumberTicker from "@/components/magic-ui/number-ticker";
-import WordFadeIn from "@/components/magic-ui/word-fade-in";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
+import { useQuizStore } from "../today/_store";
 
 export default function Results() {
+  const correctAnswers = useQuizStore((state) => state.correctAnswers());
   const [reveal, setReveal] = useState(false);
+
+  const handleShare = () => {
+    window.open(
+      "https://x.com/intent/tweet?text=I found the secret word on quizo.me"
+    );
+  };
 
   return (
     <div className="max-w-[300px] mx-auto md:my-32 my-4 flex items-center justify-center gap-10 flex-col">
@@ -18,8 +25,8 @@ export default function Results() {
         You have completed the quiz and found the secret word!
       </p>
 
-      <span className="text-lg">
-        <NumberTicker value={4} /> / 10
+      <span className="text-lg font-semibold">
+        <NumberTicker value={correctAnswers} /> / 10
       </span>
 
       <span
@@ -34,8 +41,13 @@ export default function Results() {
         <span onClick={() => setReveal(true)}>
           <ConfettiButton>Reveal</ConfettiButton>
         </span>
-        <Button size="lg" className="w-full" variant="outline">
-          Share
+        <Button
+          size="lg"
+          className="w-full"
+          variant="outline"
+          onClick={handleShare}
+        >
+          Share on X
         </Button>
       </div>
     </div>

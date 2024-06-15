@@ -12,6 +12,7 @@ interface QuizStoreProps {
   currentQuestion: () => TodayQuestions[number];
   answer: () => string;
   isFinished: () => boolean;
+  correctAnswers: () => number;
 }
 
 export const useQuizStore = create(
@@ -30,6 +31,11 @@ export const useQuizStore = create(
       currentQuestion: () => get().questions[get().currentQuestionIdx],
       answer: () => get().answers[get().currentQuestionIdx],
       isFinished: () => get().currentQuestionIdx === get().questions.length - 1,
+      correctAnswers: () =>
+        Object.keys(get().answers).map((key) => {
+          const answer = get().answers[key];
+          return answer === get().questions[Number(key)].correct_key;
+        }).filter((answer) => answer === true).length,
     }),
     {
       name: "quiz",
