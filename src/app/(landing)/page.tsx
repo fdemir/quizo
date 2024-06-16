@@ -58,11 +58,22 @@ export default function Home() {
       </div>
 
       <div className="absolute bottom-0 left-0 right-0 flex justify-center items-center gap-4 text-zinc-500 text-xs py-1">
-        <span>
-          Made by <a href="https://twitter.com/furkaneulogy">@furkaneulogy</a>.
-          Create shared watchlists on{" "}
-          <a href="https://watchandchill.in" target="_blank">
+        <span className="text-center">
+          Made by{" "}
+          <a href="https://twitter.com/furkaneulogy" className="underline">
+            @furkaneulogy
+          </a>
+          <br /> Create shared watchlists on{" "}
+          <a
+            href="https://watchandchill.in"
+            target="_blank"
+            className="underline"
+          >
             WatchAndChill
+          </a>
+          <br />
+          <a href="https://github.com/fdemir/quizo" className="underline">
+            Source code
           </a>
         </span>
       </div>
