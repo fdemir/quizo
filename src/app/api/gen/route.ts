@@ -6,6 +6,8 @@ import { options, questions } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { db } from "@/db/drizzle";
 import { fields } from "./fields";
+import { randomWords } from "@/constant";
+import { memdb } from "@/db/memory";
 
 function getRandomUniqueItems(arr: string[], numItems = 3) {
   const result = [];
@@ -20,6 +22,10 @@ function getRandomUniqueItems(arr: string[], numItems = 3) {
   }
 
   return result;
+}
+
+function getRandomItem(arr: string[]) {
+  return arr[Math.floor(Math.random() * arr.length)];
 }
 
 const QUESTION_COUNT = 10;
@@ -71,6 +77,10 @@ export async function POST(request: Request) {
       status: 400,
     });
   }
+
+  const word = getRandomItem(randomWords);
+
+  memdb.set("word", word);
 
   const categories = getRandomUniqueItems(fields);
 

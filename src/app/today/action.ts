@@ -1,5 +1,6 @@
 "use server";
 import { db } from "@/db/drizzle";
+import { memdb } from "@/db/memory";
 import { questions } from "@/db/schema";
 import { eq } from "drizzle-orm";
 
@@ -13,3 +14,7 @@ export const getTodayQuestions = async () => {
 };
 
 export type TodayQuestions = Awaited<ReturnType<typeof getTodayQuestions>>;
+
+export const getTodaySecretWord = async () => {
+  return memdb.get("word");
+};
