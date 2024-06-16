@@ -5,16 +5,32 @@ import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
   title: "Quizo",
-  description: `Solve it and reveal the secret word.`,
+  description: `Solve it and reveal the secret word. Daily general knowledge quiz.`,
   openGraph: {
     title: "Quizo",
     description: `Solve it and reveal the secret word.`,
     url: "https://quizo.me",
+    images: [
+      {
+        url: "https://quizo.me/og.png",
+        width: 1200,
+        height: 630,
+        alt: "Quizo",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Quizo",
     description: `Solve it and reveal the secret word.`,
+    images: [
+      {
+        url: "https://quizo.me/og.png",
+        width: 1200,
+        height: 630,
+        alt: "Quizo",
+      },
+    ],
   },
 };
 
