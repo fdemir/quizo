@@ -10,8 +10,10 @@ import { useEffect } from "react";
 
 export default function Quiz({
   questions: serverQuestions,
+  createdAt: serverCreatedAt,
 }: {
   questions: TodayQuestions;
+  createdAt: Date | null;
 }) {
   const router = useRouter();
 
@@ -32,11 +34,18 @@ export default function Quiz({
   }));
 
   useEffect(() => {
-    useQuizStore.setState({ questions: serverQuestions });
+    // TODO
+    if (!serverCreatedAt) return;
 
-    if (isFinished) {
-      router.push("/results");
-    }
+    useQuizStore.setState({
+      questions: serverQuestions,
+      answers: {},
+      currentQuestionIdx: 0,
+    });
+
+    // if (isFinished) {
+    //   router.push("/results");
+    // }
   }, [serverQuestions]);
 
   if (!currentQuestion) return;
@@ -52,7 +61,7 @@ export default function Quiz({
 
   return (
     <div className="w-[400px] flex flex-col gap-4">
-      <div className="flex items-center gap-4 w-full">
+      <div className="flex gap-4 w-full">
         <span className="font-bold text-3xl">#{currentQuestionIdx + 1}</span>
         <Progress
           value={(currentQuestionIdx + 1) * 10}
