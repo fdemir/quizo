@@ -1,6 +1,8 @@
 import { getTodayQuestions } from "./action";
 import Quiz from "./_components/quiz";
 
+export const dynamic = "force-dynamic";
+
 export default async function Today() {
   const data = await getTodayQuestions();
 
